@@ -1,4 +1,5 @@
 import re
+import mutagen
 
 class PyrationMetaData(object):
     orig = ""
@@ -21,3 +22,9 @@ class PyrationMetaData(object):
 
     def to_path(self):
         return "{}/{}.{}".format(self.artist, self.title, self.container)
+
+    def write_metadata(self, path):
+        m = mutagen.File(path, easy=True)
+        m["artist"] = self.artist
+        m["title"] = self.title
+        m.save()
